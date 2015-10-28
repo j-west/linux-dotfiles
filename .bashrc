@@ -5,11 +5,14 @@ fi
 
 xhost +local:root > /dev/null 2>&1
 
+#PATH
+export PATH=$PATH:~/fun/Color-Scripts/color-scripts:~/fun/pipes.sh/
+
 complete -cf sudo
 
 #Prompt Color
 
-#xfce4-terminal -x export PS1='\[\e[0;33\]\W \>> '
+#PS1='\[\e[0;33\]\W \>> '
 
 # Bash won't get SIGWINCH if another process is in the foreground.
 # Enable checkwinsize so that bash will check the terminal size when
@@ -26,6 +29,8 @@ alias np='nano -w PKGBUILD'
 alias more=less
 alias subt3='~/sublime_text_3/sublime_text'
 alias lock='i3lock -f'
+alias clock='tty-clock -c -t -C 0'
+
 # export QT_SELECT=4
 
 # Enable history appending instead of overwriting.  #139609
@@ -69,9 +74,9 @@ if ${use_color} ; then
 	fi
 
 	if [[ ${EUID} == 0 ]] ; then
-		PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+		PS1='\[\e[0;33m\]\W >>\[\e[m\] '
 	else
-		PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
+		PS1='\[\e[0;33m\]\W >>\[\e[m\] '
 	fi
 
 	alias ls='ls --color=auto'
@@ -81,9 +86,10 @@ if ${use_color} ; then
 else
 	if [[ ${EUID} == 0 ]] ; then
 		# show root@ when we don't have colors
-		PS1='\[\e[0;33\]\W \>> '
+		PS1='\[\e[0;33m\]\W >>\[\e[m\] '
 	else
-		PS1='\[\e[0;33\]\W \>> '
+		PS1='\[\e[0;33m\]\W >>\[\e[m\] '
+
 	fi
 fi
 
@@ -145,4 +151,6 @@ colors() {
 }
 
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
+
+PS1='\[\e[0;33m\]\W >>\[\e[m\] '
 
